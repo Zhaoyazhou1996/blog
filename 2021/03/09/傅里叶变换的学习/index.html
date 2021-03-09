@@ -86,14 +86,14 @@
 <meta property="og:site_name" content="赵亚宙的个人博客">
 <meta property="og:description" content="​        最近遇到傅里叶变换也就是DFT变换，我记得之前在简书上做过一些笔记，但是理解的还不是很透彻，现在回过头又重新学习了一遍，下面的链接都我认为最通俗易懂的一些资源，在这里记录一哈。  傅里叶分析之掐死教程（完整版）更新于2014.06.06  图像傅里叶变换的频率怎么理解？  【官方双语】形象展示傅里叶变换   ​        其实全部看下来，有了一个大致的了解，最好理解的一维傅里">
 <meta property="og:locale">
-<meta property="og:image" content="http://zhaoyazhou1996.gitee.io/2021/03/09/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2%E7%9A%84%E5%AD%A6%E4%B9%A0/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2%E7%9A%84%E5%AD%A6%E4%B9%A0%5Ccameraman%E5%8F%8A%E9%A2%91%E8%B0%B1%E5%9B%BE.png">
+<meta property="og:image" content="http://zhaoyazhou1996.gitee.io/2021/03/09/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2%E7%9A%84%E5%AD%A6%E4%B9%A0/cameraman%E5%8F%8A%E9%A2%91%E8%B0%B1%E5%9B%BE.png">
 <meta property="article:published_time" content="2021-03-09T08:23:56.000Z">
-<meta property="article:modified_time" content="2021-03-09T14:20:45.405Z">
+<meta property="article:modified_time" content="2021-03-09T14:28:13.618Z">
 <meta property="article:author" content="赵亚宙">
 <meta property="article:tag" content="日常">
 <meta property="article:tag" content="学习">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://zhaoyazhou1996.gitee.io/2021/03/09/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2%E7%9A%84%E5%AD%A6%E4%B9%A0/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2%E7%9A%84%E5%AD%A6%E4%B9%A0%5Ccameraman%E5%8F%8A%E9%A2%91%E8%B0%B1%E5%9B%BE.png">
+<meta name="twitter:image" content="http://zhaoyazhou1996.gitee.io/2021/03/09/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2%E7%9A%84%E5%AD%A6%E4%B9%A0/cameraman%E5%8F%8A%E9%A2%91%E8%B0%B1%E5%9B%BE.png">
 
 
 
@@ -336,7 +336,7 @@
 </ul>
 <p>​        其实全部看下来，有了一个大致的了解，最好理解的一维傅里叶最直观的例子就是声音的波形图，以时间为x轴，y轴为振幅，那么关于时域到频域的转换可以理解为，对于某一种正弦音而言，其在频率域中就是一个音符，那么对于世上纷繁复杂的声音而言都可以分解成正弦音的叠加，也就是说无论你发出或听到什么样的声音，它就像上帝已经写好的脚本，不以个人意志为转移。</p>
 <p>​        但是对于二维度的傅里叶而言，理解起来不是那么简单了，一维波变成了二维波，低频表示了图像中能量高的部分，也就是图像中主体部分，而高频则是图像中边缘部分，所以能量低是整图的轮廓（详见下图，经典cameraman,偷的嘿嘿）。</p>
-<p><img src="/2021/03/09/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2%E7%9A%84%E5%AD%A6%E4%B9%A0/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2%E7%9A%84%E5%AD%A6%E4%B9%A0%5Ccameraman%E5%8F%8A%E9%A2%91%E8%B0%B1%E5%9B%BE.png" alt="cameraman"></p>
+<p><img src="/2021/03/09/%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2%E7%9A%84%E5%AD%A6%E4%B9%A0/cameraman%E5%8F%8A%E9%A2%91%E8%B0%B1%E5%9B%BE.png" alt="cameraman"></p>
 <p>​        那么最头疼的来了，如何直观的理解空间域图与频率域图间的联系呢？下面这段话武大同学的话让俺茅塞顿开：</p>
 <blockquote>
 <p>你好，试答如下：<br>图像的空间域就是二维平面坐标系，它有两个正交的轴即x,y轴。<br>某点在空间域上的幅值就是该点处的灰度。<br>图像上某点处的灰度是该点在x,y方向上灰度的叠加。<br>这样，分别以x,y为横坐标，灰度值为纵坐标，得到两个函数。表示图像在x,y方向上的灰度值变化情况。<br>根据傅里叶级数的知识，这两个函数都写成很多个不同振幅及频率的正弦函数的和。<br>通过傅里叶变换，灰度-x函数变换成了振幅-u函数，灰度-y函数变换成了振幅-v函数。<br>建立以u,v为正交轴的平面坐标系，各点的灰度值用该点在u,v方向上的振幅的和表示。这样就得到了频率图。<br>本人武汉大学印刷工程专业学生。</p>
