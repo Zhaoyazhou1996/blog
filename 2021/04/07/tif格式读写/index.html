@@ -1,0 +1,205 @@
+<!DOCTYPE html><html lang="zh-Hans" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>赵亚宙的个人博客 | 赵亚宙的个人博客</title><meta name="keywords" content="日常,学习"><meta name="author" content="赵亚宙"><meta name="copyright" content="赵亚宙"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="今天接到任务研究一下tif数据的读写，问题是常规gdal读写tif太慢了，解压缩和压缩过程太慢。 1.gdal读写tif VS2017编译配置GDAL——超详细，适合初学者！！！ c++读写TIF数据 GDAL关于读写图像的简明总结  首先进行一手tif的gdal的读，发现原来已经整过gdal库了版本是2.2.1，直接在vs2012中使用，读写tif后解析。 GDAL中对于tif图像的解析是这样的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="赵亚宙的个人博客">
+<meta property="og:url" content="http://zhaoyazhou1996.gitee.io/2021/04/07/tif%E6%A0%BC%E5%BC%8F%E8%AF%BB%E5%86%99/index.html">
+<meta property="og:site_name" content="赵亚宙的个人博客">
+<meta property="og:description" content="今天接到任务研究一下tif数据的读写，问题是常规gdal读写tif太慢了，解压缩和压缩过程太慢。 1.gdal读写tif VS2017编译配置GDAL——超详细，适合初学者！！！ c++读写TIF数据 GDAL关于读写图像的简明总结  首先进行一手tif的gdal的读，发现原来已经整过gdal库了版本是2.2.1，直接在vs2012中使用，读写tif后解析。 GDAL中对于tif图像的解析是这样的">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-04-07T11:19:44.000Z">
+<meta property="article:modified_time" content="2021-06-16T15:14:21.567Z">
+<meta property="article:author" content="赵亚宙">
+<meta property="article:tag" content="日常">
+<meta property="article:tag" content="学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://zhaoyazhou1996.gitee.io/2021/04/07/tif%E6%A0%BC%E5%BC%8F%E8%AF%BB%E5%86%99/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-06-16 23:14:21'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/%E5%A4%B4%E5%83%8F.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">8</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div></div></div><hr/></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">赵亚宙的个人博客</a></span><div id="menus"><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">No title</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2021-04-07T11:19:44.000Z" title="Created 2021-04-07 19:19:44">2021-04-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2021-06-16T15:14:21.567Z" title="Updated 2021-06-16 23:14:21">2021-06-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>今天接到任务研究一下tif数据的读写，问题是常规gdal读写tif太慢了，解压缩和压缩过程太慢。</p>
+<h3 id="1-gdal读写tif"><a href="#1-gdal读写tif" class="headerlink" title="1.gdal读写tif"></a>1.gdal读写tif</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32153213/article/details/81363588">VS2017编译配置GDAL——超详细，适合初学者！！！</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/289007705">c++读写TIF数据</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/charlee44/p/5723213.html">GDAL关于读写图像的简明总结</a></li>
+</ul>
+<p>首先进行一手tif的gdal的读，发现原来已经整过gdal库了版本是2.2.1，直接在vs2012中使用，读写tif后解析。</p>
+<p>GDAL中对于tif图像的解析是这样的</p>
+<p>(1)打开tif文件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poDataset = (GDALDataset *)GDALOpen(file_path_name, GA_ReadOnly);<span class="comment">//读取文件</span></span><br></pre></td></tr></table></figure>
+
+<p>(2)获取波段数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bandcount = poDataset-&gt;GetRasterCount();	<span class="comment">// 获取波段数</span></span><br></pre></td></tr></table></figure>
+
+<p>(3)遍历波段</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> bandind = <span class="number">1</span>; bandind &lt;= bandcount; bandind++)</span><br><span class="line">	&#123;</span><br><span class="line">		poBand = poDataset-&gt;GetRasterBand(bandind);		<span class="comment">// 获取对应波段</span></span><br><span class="line">		<span class="comment">//读取图像高程数据 </span></span><br><span class="line">		<span class="keyword">int</span> num_iamge_size = <span class="number">0</span>;		<span class="comment">//数据计数</span></span><br><span class="line">		BYTE *pafScanline = <span class="keyword">new</span> BYTE[nImgSizeX*nImgSizeY];</span><br><span class="line">		poBand-&gt;RasterIO(GF_Read, <span class="number">0</span>, <span class="number">0</span>, nImgSizeX, nImgSizeY, pafScanline, nImgSizeX, nImgSizeY, GDALDataType(poBand-&gt;GetRasterDataType()), <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nImgSizeX; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; nImgSizeY; j++)</span><br><span class="line">			&#123;</span><br><span class="line">				num_iamge_size++;</span><br><span class="line">				<span class="built_in">cout</span> &lt;&lt; pafScanline[i*nImgSizeY+j] &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;total:&quot;</span> &lt;&lt; num_iamge_size &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="keyword">delete</span>[] pafScanline;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从波段的读取可以看出<code>RasterIO</code>这个函数 默认将二维的波段变成一维数组进行读取，关于函数详解参见本节第二条链接。</p>
+<p>(4)改写像素值</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">poDataset = (GDALDataset *)GDALOpen(file_path_name, GA_Update);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-gdal读写效率分析"><a href="#2-gdal读写效率分析" class="headerlink" title="2.gdal读写效率分析"></a>2.gdal读写效率分析</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://gdal.org/api/gdalrasterband_cpp.html">GDAL官网API</a></li>
+<li><a target="_blank" rel="noopener" href="http://blog.sina.com.cn/s/blog_616f2fa40100xepp.html">GDAL如何快速获取波段单个像元的值</a></li>
+</ul>
+<p>就目前掌握的信息来看，主要有两种读取像素值的方法：<code>WriteBlock</code>和<code>IRasterIO</code>，就官方文档的说法而言，<code>WriteBlock</code>比<code>IRasterIO</code>更高效，目前遇到一个很尴尬的问题，就是gdal2.2后有一些新的方法加入，比如<code>GetActualBlockSize</code>这个方法用于获取给定偏移量的实际大小，不幸的是我目前使用的是2.1版本的gdal，因此如果想要计算效率可能需要升级版本。</p>
+<p><strong>效率对比</strong></p>
+<p>实验数据为625M的遥感影像，实验结果为流读取耗时10813ms，而块读取耗时为7000ms，由此可见在GDAL框架下读取tif数据，块效率更高，但是兼容性流读取比块读取兼容性更强。</p>
+<p>(1)rasterIO</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rasterIORead</span><span class="params">(GDALRasterBand *poBand)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   BYTE adfPixel;</span><br><span class="line">   adfPixel = <span class="number">0.0</span>;</span><br><span class="line">   BYTE *lineData = <span class="literal">NULL</span>;</span><br><span class="line">   lineData = <span class="keyword">new</span> BYTE[<span class="number">1</span> * poBand-&gt;GetXSize()];</span><br><span class="line"></span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> iLine = <span class="number">0</span>; iLine &lt; poBand-&gt;GetYSize(); iLine++)</span><br><span class="line">   &#123;</span><br><span class="line">      poBand-&gt;RasterIO( GF_Read, <span class="number">0</span>, iLine, poBand-&gt;GetXSize(), <span class="number">1</span>,lineData, poBand-&gt;GetXSize(), <span class="number">1</span>, GDALDataType(poBand-&gt;GetRasterDataType()), <span class="number">0</span>, <span class="number">0</span> );</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> iPixel = <span class="number">0</span>; iPixel &lt; poBand-&gt;GetXSize(); iPixel++)</span><br><span class="line">      &#123;</span><br><span class="line">          adfPixel = lineData[iPixel];</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span> (lineData)</span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">delete</span> []lineData;</span><br><span class="line">      lineData = <span class="literal">NULL</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>(2)readBlock</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">blockRead</span><span class="params">(GDALRasterBand *poBand)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   BYTE adfPixel;</span><br><span class="line">   adfPixel = <span class="number">0.0</span>;</span><br><span class="line">   BYTE *pabyData = <span class="literal">NULL</span>;</span><br><span class="line">   pabyData = <span class="keyword">new</span> BYTE[<span class="number">1</span> * poBand-&gt;GetXSize()];</span><br><span class="line"></span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> iLine = <span class="number">0</span>; iLine &lt; poBand-&gt;GetYSize(); iLine++)</span><br><span class="line">   &#123;</span><br><span class="line">      poBand-&gt;ReadBlock( <span class="number">0</span>, iLine, pabyData );</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> iPixel = <span class="number">0</span>; iPixel &lt; poBand-&gt;GetXSize(); iPixel++)</span><br><span class="line">      &#123;</span><br><span class="line">          adfPixel = pabyData[iPixel];</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (pabyData)</span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">delete</span> []pabyData;</span><br><span class="line">      pabyData = <span class="literal">NULL</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>有趣的一点是，如果把代码再改一下就是不按照读取一行，再读取一列的顺序读，流读取只需要7937ms。但总体来说还是块读取更效率更高。</p>
+<p>rasterIO2</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">rasterIORead2</span><span class="params">(GDALRasterBand *poBand)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">   BYTE adfPixel;</span><br><span class="line">   adfPixel = <span class="number">0.0</span>;</span><br><span class="line">   BYTE *pafScanline = <span class="literal">NULL</span>;</span><br><span class="line">   pafScanline = <span class="keyword">new</span> BYTE[poBand-&gt;GetYSize() * poBand-&gt;GetXSize()];</span><br><span class="line"></span><br><span class="line">   poBand-&gt;RasterIO(GF_Read, <span class="number">0</span>, <span class="number">0</span>, poBand-&gt;GetXSize(), poBand-&gt;GetYSize(), pafScanline, poBand-&gt;GetXSize(), poBand-&gt;GetXSize(), GDALDataType(poBand-&gt;GetRasterDataType()), <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; poBand-&gt;GetYSize()*poBand-&gt;GetXSize(); i++)</span><br><span class="line">   &#123;</span><br><span class="line">          adfPixel = pafScanline[i];</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span> (pafScanline)</span><br><span class="line">   &#123;</span><br><span class="line">      <span class="keyword">delete</span> []pafScanline;</span><br><span class="line">      pafScanline = <span class="literal">NULL</span>;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-gdal项目实践"><a href="#3-gdal项目实践" class="headerlink" title="3.gdal项目实践"></a>3.gdal项目实践</h3><p>项目中果不其然的用了RasterIO来读写数据，我们来看一下读写方式</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CPLErr eRes = pBandImg-&gt;RasterIO(</span><br><span class="line">			GF_Read, </span><br><span class="line">			colStart, rowStart, readWidth, readHeight,</span><br><span class="line">			data + i * bitNum * readWidth * readHeight,</span><br><span class="line">			readWidth, readHeight,</span><br><span class="line">			imgDataType, <span class="number">0</span>, <span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+
+<p>其中经过和大佬的讨论，<code>data + i * bitNum * readWidth * readHeight</code>这一步骤用于读入图像的不同波段相同位置的块，那么加上循环就是将一副图像相同位置像素拼接成一维数组。</p>
+<p><strong>库测试</strong></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41175905/article/details/80560429">VS2017配置opencv教程（超详细！！！）</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32153213/article/details/81363588">VS2017编译配置GDAL——超详细，适合初学者！！！</a></li>
+<li><a target="_blank" rel="noopener" href="https://learnopencv.com/read-an-image-in-opencv-python-cpp/">Read an Image in OpenCV ( Python, C++ )</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/smallstones/article/details/48352873">LIBTIFF配置方法总结</a></li>
+<li>[<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_33811961/article/details/94033199">VS2017编译配置GDAL32位</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/YhL_Leo/article/details/49848391?utm_source=blogxgwz4">libTIFF 图像读取与保存</a></li>
+<li><a target="_blank" rel="noopener" href="https://jingyan.baidu.com/article/29697b91465392ab20de3cc2.html">如何利用libtiff库读取tiff格式图片上的坐标</a></li>
+</ul>
+<p>想要从gdal库中做文章显然是不行了，接下来准备配置一下GDAL、OPENCV和LIBTIFF的环境进行效率测试。</p>
+<p>通过查阅了几天的资料，整明白了其实只要测试GDAL和LIBTIFF这两个库就完事了，OPENCV读取tiff的功能是基于LIBTIFF写的。LIBTIFF读取某一波段的代码如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">libtiffRead2</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* filePath)</span> </span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	TIFF* tif = TIFFOpen(filePath, <span class="string">&quot;r&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span> (tif) &#123;</span><br><span class="line">		<span class="keyword">int</span> width, height;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//获取图像的长高</span></span><br><span class="line">		TIFFGetField(tif,TIFFTAG_IMAGEWIDTH,&amp;width);</span><br><span class="line">		TIFFGetField(tif, TIFFTAG_IMAGELENGTH, &amp;height);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//获取图片帧数</span></span><br><span class="line">		<span class="keyword">int</span> nTotalFrame = TIFFNumberOfDirectories(tif);</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;width:&quot;</span>&lt;&lt;width&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;height:&quot;</span> &lt;&lt; height &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;slice:&quot;</span> &lt;&lt; nTotalFrame &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//获取每一帧的像素点数目</span></span><br><span class="line">		<span class="keyword">int</span> stripSize = TIFFStripSize(tif);</span><br><span class="line">		<span class="keyword">int</span> pointCount = <span class="number">0</span>;</span><br><span class="line">		<span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;stripSize:&quot;</span> &lt;&lt; stripSize &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line"></span><br><span class="line">		uint32* count = (uint32*)_TIFFmalloc(width * height * <span class="keyword">sizeof</span>(uint32));</span><br><span class="line">		</span><br><span class="line">		TIFFSetDirectory(tif, <span class="number">0</span>);<span class="comment">//用来确定读取第几张图片，tif允许多个图片存一起，默认从0开始</span></span><br><span class="line">		TIFFReadRGBAImage(tif, width, height, count, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">		uint32* rowPoint2Src = count + (height - <span class="number">1</span>)*width;</span><br><span class="line">		<span class="comment">//构建一个指向最后一行的第一个元素。</span></span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; height; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			uint32* colPoint2Src = rowPoint2Src;</span><br><span class="line">			<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; width; j++)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">//像素值输出</span></span><br><span class="line">				<span class="built_in">cout</span>&lt;&lt; (uint32)TIFFGetG(*colPoint2Src) &lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">				pointCount++;</span><br><span class="line">				colPoint2Src++;</span><br><span class="line">			&#125;</span><br><span class="line">			rowPoint2Src -= width;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;<span class="string">&quot;该波段像素点个数为：&quot;</span> &lt;&lt; pointCount &lt;&lt; <span class="built_in">endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用了一个600M的数据测试了一下，GDAL用时2125ms，而libtif用时715ms，成了！明天继续。</p>
+<hr>
+<p>溜了一个月回来了，日，突然发现无论是GDAL还是OPENCV都是基于libtiff做的，换库看来没什么说法了。那么目前只有两条路能走，第一条自己写（并不想），第二条看看gdal有无更快的读取方法。</p>
+<hr>
+<p>2021-06-16</p>
+<p>最近隔了时间比较长，简单的做一下总结，那就是研究了一下<a target="_blank" rel="noopener" href="https://github.com/libvips/libvips">Libvips</a>这个库，发现贼好用，最暖心的一点在于在使用过程中遇到很多问题，作者都一一解答了，目前的进度是用该库分块读取tiff很快，现在把该库应用到现有项目中来代替GDAL看看效果，其实挺麻烦的，原来的读写写的比较复杂，需要一段时间的摸索，如果有有缘人看到这篇文章，想了解Libvips在windows平台下怎么用起来可以滴滴我，俺抽空写一下。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">赵亚宙</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://zhaoyazhou1996.gitee.io/2021/04/07/tif%E6%A0%BC%E5%BC%8F%E8%AF%BB%E5%86%99/">http://zhaoyazhou1996.gitee.io/2021/04/07/tif%E6%A0%BC%E5%BC%8F%E8%AF%BB%E5%86%99/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%97%A5%E5%B8%B8/">日常</a><a class="post-meta__tags" href="/tags/%E5%AD%A6%E4%B9%A0/">学习</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/04/15/iggi%E5%A4%A7%E4%BF%AE%EF%BC%88%E5%93%AD%EF%BC%89/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">iggi大修（哭）</div></div></a></div><div class="next-post pull-right"><a href="/2021/04/06/Delaunay%E4%B8%89%E8%A7%92%E7%BD%91%E8%AE%BA%E6%96%87%E6%80%9D%E8%B7%AF%E6%95%B4%E7%90%86/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Delaunay三角网论文思路整理</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2021/03/08/20210308/" title="20210308"><img class="cover" src="/" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-08</div><div class="title">20210308</div></div></a></div><div><a href="/2021/03/09/傅里叶变换的学习/" title="傅里叶变换的学习"><img class="cover" src="/img/cameraman%E5%8F%8A%E9%A2%91%E8%B0%B1%E5%9B%BE.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-09</div><div class="title">傅里叶变换的学习</div></div></a></div><div><a href="/2021/04/06/Delaunay三角网论文思路整理/" title="Delaunay三角网论文思路整理"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-06</div><div class="title">Delaunay三角网论文思路整理</div></div></a></div><div><a href="/2021/03/07/20210307/" title="20210307"><img class="cover" src="/../../../source/_post/20210307/%E9%BE%99%E7%8C%AB.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-07</div><div class="title">20210307</div></div></a></div><div><a href="/2021/04/06/20210406/" title="20210406"><img class="cover" src="/../../../source/_post/2021-04-06/wallhaven-wqq2p7.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-06</div><div class="title">20210406</div></div></a></div><div><a href="/2021/04/15/iggi大修（哭）/" title="iggi大修（哭）"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-15</div><div class="title">iggi大修（哭）</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/%E5%A4%B4%E5%83%8F.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">赵亚宙</div><div class="author-info__description">这个人很懒什么都没留下</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">8</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">7</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">3</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-gdal%E8%AF%BB%E5%86%99tif"><span class="toc-number">1.</span> <span class="toc-text">1.gdal读写tif</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-gdal%E8%AF%BB%E5%86%99%E6%95%88%E7%8E%87%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">2.gdal读写效率分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-gdal%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5"><span class="toc-number">3.</span> <span class="toc-text">3.gdal项目实践</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/04/15/iggi%E5%A4%A7%E4%BF%AE%EF%BC%88%E5%93%AD%EF%BC%89/" title="iggi大修（哭）"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="iggi大修（哭）"/></a><div class="content"><a class="title" href="/2021/04/15/iggi%E5%A4%A7%E4%BF%AE%EF%BC%88%E5%93%AD%EF%BC%89/" title="iggi大修（哭）">iggi大修（哭）</a><time datetime="2021-04-15T12:35:55.000Z" title="Created 2021-04-15 20:35:55">2021-04-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/07/tif%E6%A0%BC%E5%BC%8F%E8%AF%BB%E5%86%99/" title="No title"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="No title"/></a><div class="content"><a class="title" href="/2021/04/07/tif%E6%A0%BC%E5%BC%8F%E8%AF%BB%E5%86%99/" title="No title">No title</a><time datetime="2021-04-07T11:19:44.000Z" title="Created 2021-04-07 19:19:44">2021-04-07</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/06/Delaunay%E4%B8%89%E8%A7%92%E7%BD%91%E8%AE%BA%E6%96%87%E6%80%9D%E8%B7%AF%E6%95%B4%E7%90%86/" title="Delaunay三角网论文思路整理"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Delaunay三角网论文思路整理"/></a><div class="content"><a class="title" href="/2021/04/06/Delaunay%E4%B8%89%E8%A7%92%E7%BD%91%E8%AE%BA%E6%96%87%E6%80%9D%E8%B7%AF%E6%95%B4%E7%90%86/" title="Delaunay三角网论文思路整理">Delaunay三角网论文思路整理</a><time datetime="2021-04-06T13:30:56.000Z" title="Created 2021-04-06 21:30:56">2021-04-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/04/06/20210406/" title="20210406"><img src="/../../../source/_post/2021-04-06/wallhaven-wqq2p7.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="20210406"/></a><div class="content"><a class="title" href="/2021/04/06/20210406/" title="20210406">20210406</a><time datetime="2021-04-06T01:03:45.000Z" title="Created 2021-04-06 09:03:45">2021-04-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/03/12/vs2017%E6%89%93%E5%8C%85%E8%8E%B7%E5%8F%96%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84%E6%8E%92%E5%9D%91%E8%AE%B0%E5%BD%95/" title="vs2017打包获取安装路径排坑记录"><img src="/vs2017%E6%89%93%E5%8C%85%E8%8E%B7%E5%8F%96%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84%E6%8E%92%E5%9D%91%E8%AE%B0%E5%BD%95/%E5%AE%89%E8%A3%85%E7%B1%BB.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="vs2017打包获取安装路径排坑记录"/></a><div class="content"><a class="title" href="/2021/03/12/vs2017%E6%89%93%E5%8C%85%E8%8E%B7%E5%8F%96%E5%AE%89%E8%A3%85%E8%B7%AF%E5%BE%84%E6%8E%92%E5%9D%91%E8%AE%B0%E5%BD%95/" title="vs2017打包获取安装路径排坑记录">vs2017打包获取安装路径排坑记录</a><time datetime="2021-03-12T01:11:03.000Z" title="Created 2021-03-12 09:11:03">2021-03-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By 赵亚宙</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
